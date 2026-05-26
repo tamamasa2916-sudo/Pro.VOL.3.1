@@ -1,7 +1,7 @@
 {
   "name": "定期巡回 利用料計算 PRO",
   "short_name": "定期巡回PRO",
-  "description": "定期巡回・随時対応型訪問介護看護 利用料 簡易計算ツール いのり版（令和８年度 処遇改善加算改定対応）",
+  "description": "定期巡回・随時対応型訪問介護看護 利用料 簡易計算ツール いのり版（令和8年度 処遇改善加算改定対応）",
   "start_url": "/tamamasa2916/index.html",
   "scope": "/tamamasa2916/",
   "display": "standalone",
