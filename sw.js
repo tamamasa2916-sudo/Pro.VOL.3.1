@@ -2,7 +2,7 @@
    Service Worker — 定期巡回計算ツール PRO版
    sw_pro.js
    ===================================================== */
-var CACHE_NAME = 'teiki-inori-v1';
+var CACHE_NAME = 'teiki-inori-v2';
 var ASSETS = [
   '/tamamasa2916/index.html',
   '/tamamasa2916/manifest.json',
