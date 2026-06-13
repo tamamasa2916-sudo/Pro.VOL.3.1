@@ -751,14 +751,14 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:13px 0}
 <!-- ④処遇改善加算 -->
 <div class="card">
   <div class="card-head"><div class="num n-teal">④</div><div class="card-title">処遇改善加算</div></div>
-  <div class="shogai-box"><strong>計算方法</strong><br>加減算後の総単位数×加算率　Ⅰイ＝26.7%　Ⅰロ＝27.8%　Ⅱイ＝24.6%　Ⅱロ＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%</div>
+  <div class="shogai-box"><strong>計算方法</strong><br>加減算後の総単位数×加算率　Ⅰ１＝26.7%　Ⅰ２＝27.8%　Ⅱ１＝24.6%　Ⅱ２＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%</div>
   <div class="fg"><label class="fl">処遇改善加算の区分</label>
     <select id="shokaigo">
       <option value="0">なし</option>
-      <option value="0.267">処遇改善加算（Ⅰイ） ＋26.7%【標準型】</option>
-      <option value="0.278">処遇改善加算（Ⅰロ） ＋27.8%【生産性向上型】</option>
-      <option value="0.246">処遇改善加算（Ⅱイ） ＋24.6%【標準型】</option>
-      <option value="0.257">処遇改善加算（Ⅱロ） ＋25.7%【生産性向上型】</option>
+      <option value="0.267">処遇改善加算（Ⅰ１） ＋26.7%【標準型】</option>
+      <option value="0.278">処遇改善加算（Ⅰ２） ＋27.8%【生産性向上型】</option>
+      <option value="0.246">処遇改善加算（Ⅱ１） ＋24.6%【標準型】</option>
+      <option value="0.257">処遇改善加算（Ⅱ２） ＋25.7%【生産性向上型】</option>
       <option value="0.204">処遇改善加算（Ⅲ） ＋20.4%</option>
       <option value="0.167">処遇改善加算（Ⅳ） ＋16.7%</option>
     </select>
@@ -941,17 +941,17 @@ if ('serviceWorker' in navigator) {
 'use strict';
 
 var BASE={integrated_no_nursing:{1:5446,2:9720,3:16140,4:20417,5:24692},integrated_nursing:{1:7946,2:12413,3:18948,4:23358,5:28298},cooperation:{1:5446,2:9720,3:16140,4:20417,5:24692}};
-/* 日割り単位数（令和6年度告示値）：1日あたり単位数 × 利用日数 で算定 */
+/* 日割り単位数（令和8年度告示値）：1日あたり単位数 × 利用日数 で算定 */
 var BASE_DAILY={integrated_no_nursing:{1:179,2:320,3:531,4:672,5:812},integrated_nursing:{1:261,2:408,3:623,4:768,5:931},cooperation:{1:179,2:320,3:531,4:672,5:812}};
 var SVCLABEL={integrated_no_nursing:'一体型（訪問看護なし）',integrated_nursing:'一体型（訪問看護あり）',cooperation:'連携型'};
-/* サービスコード表（令和6年度 厚生労働省告示・地域密着型サービス種類コード76） */
+/* サービスコード表（令和8年度 厚生労働省告示・地域密着型サービス種類コード76） */
 var BASE_CODE={
   integrated_no_nursing:{1:'761111',2:'761121',3:'761131',4:'761141',5:'761151'},
   integrated_nursing:   {1:'761211',2:'761221',3:'761231',4:'761241',5:'761251'},
   cooperation:          {1:'762111',2:'762121',3:'762131',4:'762141',5:'762151'}
 };
 var SHOKAI_CODE={'0':'','0.267':'766114','0.278':'766183','0.246':'766112','0.257':'766184','0.204':'766104','0.167':'766380'};
-var SHOKAI_LABEL={'0.267':'処遇改善加算（Ⅰイ）標準型','0.278':'処遇改善加算（Ⅰロ）生産性向上型','0.246':'処遇改善加算（Ⅱイ）標準型','0.257':'処遇改善加算（Ⅱロ）生産性向上型','0.204':'処遇改善加算（Ⅲ）','0.167':'処遇改善加算（Ⅳ）'};
+var SHOKAI_LABEL={'0.267':'処遇改善加算（Ⅰ１）標準型','0.278':'処遇改善加算（Ⅰ２）生産性向上型','0.246':'処遇改善加算（Ⅱ１）標準型','0.257':'処遇改善加算（Ⅱ２）生産性向上型','0.204':'処遇改善加算（Ⅲ）','0.167':'処遇改善加算（Ⅳ）'};
 var _lastSteps=[];
 var _pvMode='simple';
 var _scrollY=0;
@@ -2020,11 +2020,11 @@ function updateAddonAvailability(){
   var shogaiBox=document.querySelector('.shogai-box');
   if(shogaiBox){
     if(isNursing){
-      shogaiBox.innerHTML='<strong>計算方法（一体型・看護あり）</strong><br>加減算後の総単位数×加算率　Ⅰイ＝26.7%　Ⅰロ＝27.8%　Ⅱイ＝24.6%　Ⅱロ＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%';
+      shogaiBox.innerHTML='<strong>計算方法（一体型・看護あり）</strong><br>加減算後の総単位数×加算率　Ⅰ１＝26.7%　Ⅰ２＝27.8%　Ⅱ１＝24.6%　Ⅱ２＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%';
     } else if(svc==='integrated_no_nursing'){
-      shogaiBox.innerHTML='<strong>計算方法（一体型・看護なし）</strong><br>加減算後の総単位数×加算率　Ⅰイ＝26.7%　Ⅰロ＝27.8%　Ⅱイ＝24.6%　Ⅱロ＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%';
+      shogaiBox.innerHTML='<strong>計算方法（一体型・看護なし）</strong><br>加減算後の総単位数×加算率　Ⅰ１＝26.7%　Ⅰ２＝27.8%　Ⅱ１＝24.6%　Ⅱ２＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%';
     } else {
-      shogaiBox.innerHTML='<strong>計算方法（連携型）</strong><br>加減算後の総単位数×加算率　Ⅰイ＝26.7%　Ⅰロ＝27.8%　Ⅱイ＝24.6%　Ⅱロ＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%';
+      shogaiBox.innerHTML='<strong>計算方法（連携型）</strong><br>加減算後の総単位数×加算率　Ⅰ１＝26.7%　Ⅰ２＝27.8%　Ⅱ１＝24.6%　Ⅱ２＝25.7%　Ⅲ＝20.4%　Ⅳ＝16.7%';
     }
   }
 
