@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="定期巡回計算 いのり版">
+<meta name="apple-mobile-web-app-title" content="定期巡回計算">
 <meta name="format-detection" content="telephone=no">
 <meta name="theme-color" content="#5c3fc4">
-<meta name="description" content="定期巡回・随時対応型訪問介護看護 利用料 簡易計算ツール いのり版（令和8年度介護報酬改定対応）">
+<meta name="description" content="定期巡回・随時対応型訪問介護看護 利用料 簡易計算ツール（令和8年度介護報酬改定対応）">
 <!-- PWA manifest -->
 <link rel="manifest" href="manifest.json">
 <!-- iOS ホーム画面アイコン
@@ -30,7 +30,7 @@
 <link rel="apple-touch-startup-image" href="splash-ipadpro13.png"    media="screen and (device-width:1024px) and (device-height:1366px) and (-webkit-device-pixel-ratio:2)">
 <link rel="apple-touch-startup-image" href="splash-ipadpro11.png"    media="screen and (device-width:834px) and (device-height:1194px) and (-webkit-device-pixel-ratio:2)">
 <link rel="apple-touch-startup-image" href="splash-ipad.png"         media="screen and (device-width:810px) and (device-height:1080px) and (-webkit-device-pixel-ratio:2)">
-<title>定期巡回 利用料計算 いのり版</title>
+<title>定期巡回 利用料計算</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
 :root{
@@ -547,7 +547,7 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:13px 0}
 <!-- PWAインストールバナー -->
 <div id="pwa-banner">
   <div style="flex:1">
-    <div style="font-size:13px;font-weight:700;color:#fff;">📱 ホーム画面に追加（いのり版）</div>
+    <div style="font-size:13px;font-weight:700;color:#fff;">📱 ホーム画面に追加</div>
     <div style="font-size:11px;color:rgba(255,255,255,.8);margin-top:2px;">オフラインでも使えます・機能制限なし</div>
   </div>
   <button id="pwa-install-btn">追加する</button>
@@ -563,7 +563,7 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:13px 0}
 
 <div class="wrap">
 <header style="position:relative">
-  <div class="badge">📋 令和8年度介護報酬改定対応　いのり版</div>
+  <div class="badge">📋 令和8年度介護報酬改定対応</div>
   <h1>定期巡回・随時対応型<br>訪問介護看護<small>利用料 簡易計算ツール</small></h1>
   <button type="button" class="full-reset-btn" data-action="fullreset" style="position:absolute;top:0;right:0">🔄 全リセット</button>
 </header>
@@ -774,6 +774,7 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:13px 0}
     <select id="proRateMode">
       <option value="full">満月利用（月額単位数を適用）</option>
       <option value="daily">月途中利用（日割り計算）</option>
+      <option value="mixed">混合日割り（看護なし＋看護あり）</option>
     </select>
   </div>
   <div id="usedDays-box" style="display:none;margin-top:12px">
@@ -781,6 +782,60 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:13px 0}
       <label class="fl">実際の利用日数</label>
       <input type="number" id="usedDays" value="1" min="1" max="31" style="max-width:200px">
       <div class="hint">月途中からサービスを開始・終了した日数を入力してください（日割り単位数×日数で計算）</div>
+    </div>
+  </div>
+  <!-- 混合日割り入力 -->
+  <div id="mixed-box" style="display:none;margin-top:12px">
+    <div style="background:#f0f5ff;border:1px solid #b0c8f0;border-radius:8px;padding:12px;margin-bottom:8px">
+      <div style="font-size:12px;font-weight:700;color:#1a5fa8;margin-bottom:10px">🏠 一体型（訪問看護なし）期間</div>
+      <div class="g2">
+        <div class="fg">
+          <label class="fl">要介護度</label>
+          <select id="mixedLvNo">
+            <option value="1">要介護 1</option><option value="2">要介護 2</option>
+            <option value="3">要介護 3</option><option value="4">要介護 4</option>
+            <option value="5">要介護 5</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">日数</label>
+          <input type="number" id="mixedDaysNo" value="0" min="0" max="31" style="max-width:200px">
+        </div>
+      </div>
+    </div>
+    <div style="background:#f0fff4;border:1px solid #a0d8b0;border-radius:8px;padding:12px">
+      <div style="font-size:12px;font-weight:700;color:#1a7a3c;margin-bottom:10px">🏥 一体型（訪問看護あり）期間</div>
+      <div class="g2">
+        <div class="fg">
+          <label class="fl">要介護度</label>
+          <select id="mixedLvYes">
+            <option value="1">要介護 1</option><option value="2">要介護 2</option>
+            <option value="3">要介護 3</option><option value="4">要介護 4</option>
+            <option value="5">要介護 5</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label class="fl">日数</label>
+          <input type="number" id="mixedDaysYes" value="0" min="0" max="31" style="max-width:200px">
+        </div>
+      </div>
+    </div>
+    <div class="hint" style="margin-top:8px">看護なし日数＋看護あり日数の合計が実際の利用日数になります。加算は合算後の単位数に対して適用されます。</div>
+    <!-- 混合モード 通所減算 -->
+    <div style="margin-top:12px;background:#fff5f5;border:1px solid #f0b0b0;border-radius:8px;padding:12px">
+      <div style="font-size:12px;font-weight:700;color:#c0392b;margin-bottom:10px">🏫 通所利用減算（混合）</div>
+      <div class="g2">
+        <div class="fg">
+          <label class="fl">看護なし期間の通所日数</label>
+          <input type="number" id="mixedDcDaysNo" value="0" min="0" max="31" style="max-width:200px">
+          <div class="hint">単位数は看護なし・要介護度から自動適用</div>
+        </div>
+        <div class="fg">
+          <label class="fl">看護あり期間の通所日数</label>
+          <input type="number" id="mixedDcDaysYes" value="0" min="0" max="31" style="max-width:200px">
+          <div class="hint">単位数は看護あり・要介護度から自動適用</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1126,7 +1181,14 @@ function calculate(){
   var udRaw=parseInt(document.getElementById('usedDays').value);
   var proMode=document.getElementById('proRateMode').value;
   var isPro=(proMode==='daily');
+  var isMixed=(proMode==='mixed');
   var ud=isPro?Math.min(isNaN(udRaw)||udRaw<1?1:udRaw,31):md;
+  /* 混合日割り用変数 */
+  var mixedDaysNo=isMixed?(parseInt((document.getElementById('mixedDaysNo')||{value:0}).value)||0):0;
+  var mixedDaysYes=isMixed?(parseInt((document.getElementById('mixedDaysYes')||{value:0}).value)||0):0;
+  var mixedLvNo=isMixed?(parseInt((document.getElementById('mixedLvNo')||{value:lv}).value)||lv):lv;
+  var mixedLvYes=isMixed?(parseInt((document.getElementById('mixedLvYes')||{value:lv}).value)||lv):lv;
+  if(isMixed) ud=mixedDaysNo+mixedDaysYes;
   var dd=Math.min(parseInt(document.getElementById('daycareDays').value)||0,ud);
   var dr=parseInt(document.getElementById('daycareUnitRate').value)||0;
   var sr=parseFloat(document.getElementById('shokaigo').value)||0;
@@ -1136,7 +1198,23 @@ function calculate(){
 
   var bRaw=BASE[svc][lv];
   var base;
-  if(isPro){
+  if(isMixed){
+    /* 混合日割り：看護なし期間＋看護あり期間を合算 */
+    var rateNo=BASE_DAILY['integrated_no_nursing'][mixedLvNo]||0;
+    var rateYes=BASE_DAILY['integrated_nursing'][mixedLvYes]||0;
+    var baseNo=rateNo*mixedDaysNo;
+    var baseYes=rateYes*mixedDaysYes;
+    base=baseNo+baseYes;
+    if(mixedDaysNo>0){
+      steps.push({l:'一体型（看護なし）要介護'+mixedLvNo+' 日割り',v:fmt(BASE_DAILY['integrated_no_nursing'][mixedLvNo])+'単位/日 × '+mixedDaysNo+'日',c:''});
+      steps.push({l:'　→ 小計（看護なし）',v:fmt(baseNo)+' 単位',c:''});
+    }
+    if(mixedDaysYes>0){
+      steps.push({l:'一体型（看護あり）要介護'+mixedLvYes+' 日割り',v:fmt(BASE_DAILY['integrated_nursing'][mixedLvYes])+'単位/日 × '+mixedDaysYes+'日',c:''});
+      steps.push({l:'　→ 小計（看護あり）',v:fmt(baseYes)+' 単位',c:''});
+    }
+    steps.push({l:'混合日割り 基本単位数合計',v:fmt(base)+' 単位',c:'total',sep:true});
+  } else if(isPro){
     /* 日割り：告示の1日あたり単位数 × 利用日数 */
     var dailyRate=BASE_DAILY[svc][lv];
     base=dailyRate*ud;
@@ -1173,7 +1251,19 @@ function calculate(){
     var v=parseInt(cb.getAttribute('data-value'));fDed+=v;
     steps.push({l:'－ '+cb.getAttribute('data-label'),v:'−'+fmt(v)+' 単位',c:'sub'});
   }
-  if(dd>0&&dr>0){var dv=dr*dd;fDed+=dv;steps.push({l:'－ 通所利用減算（'+dd+'日×'+dr+'単位）',v:'−'+fmt(dv)+' 単位',c:'sub'});}
+  if(isMixed){
+    /* 混合モード：看護なし・看護あり それぞれの減算単位を適用 */
+    var dcDaysNoEl=document.getElementById('mixedDcDaysNo');
+    var dcDaysYesEl=document.getElementById('mixedDcDaysYes');
+    var dcDaysNo2=parseInt(dcDaysNoEl?dcDaysNoEl.value:0)||0;
+    var dcDaysYes2=parseInt(dcDaysYesEl?dcDaysYesEl.value:0)||0;
+    var drNo2=DAYCARE_RATE['integrated_no_nursing'][mixedLvNo]||0;
+    var drYes2=DAYCARE_RATE['integrated_nursing'][mixedLvYes]||0;
+    if(dcDaysNo2>0&&drNo2>0){var dvNo=drNo2*dcDaysNo2;fDed+=dvNo;steps.push({l:'－ 通所利用減算（看護なし）（'+dcDaysNo2+'日×'+drNo2+'単位）',v:'−'+fmt(dvNo)+' 単位',c:'sub'});}
+    if(dcDaysYes2>0&&drYes2>0){var dvYes=drYes2*dcDaysYes2;fDed+=dvYes;steps.push({l:'－ 通所利用減算（看護あり）（'+dcDaysYes2+'日×'+drYes2+'単位）',v:'−'+fmt(dvYes)+' 単位',c:'sub'});}
+  } else {
+    if(dd>0&&dr>0){var dv=dr*dd;fDed+=dv;steps.push({l:'－ 通所利用減算（'+dd+'日×'+dr+'単位）',v:'−'+fmt(dv)+' 単位',c:'sub'});}
+  }
 
   var sub0=Math.max(0,base+fAdd-fDed);
   var pAdd=0;
@@ -1477,11 +1567,27 @@ function buildSheetHTML(mode){
       var tdL='padding:5px 8px;font-size:9px;color:#333;';
       var tdC='padding:5px 8px;font-size:9px;font-family:monospace;font-weight:700;color:#1a5fa8;text-align:center;';
       var tdR='padding:5px 8px;font-size:9px;text-align:right;font-family:monospace;color:#444;';
-      /* 基本サービス費 */
-      codeRows+='<tr style="'+trStyle+'background:#f0f5ff">'
-        +'<td style="'+tdC+'">'+baseCode+'</td>'
-        +'<td style="'+tdL+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#666">'+svcLbl+'　要介護'+lv2+'</span></td>'
-        +'<td style="'+tdR+'">'+baseUnit+' 単位/月</td></tr>';
+      /* 基本サービス費（混合日割りモード対応） */
+      var proModeEl3=document.getElementById('proRateMode');
+      var isMixed3=proModeEl3&&proModeEl3.value==='mixed';
+      if(isMixed3){
+        var mDNo3=parseInt((document.getElementById('mixedDaysNo')||{value:0}).value)||0;
+        var mDYes3=parseInt((document.getElementById('mixedDaysYes')||{value:0}).value)||0;
+        var mLNo3=parseInt((document.getElementById('mixedLvNo')||{value:lv2}).value)||lv2;
+        var mLYes3=parseInt((document.getElementById('mixedLvYes')||{value:lv2}).value)||lv2;
+        if(mDNo3>0){
+          var bcNo3=(BASE_CODE&&BASE_CODE['integrated_no_nursing'])?BASE_CODE['integrated_no_nursing'][mLNo3]:'—';
+          var drNo3=(BASE_DAILY&&BASE_DAILY['integrated_no_nursing'])?BASE_DAILY['integrated_no_nursing'][mLNo3]:0;
+          codeRows+='<tr style="'+trStyle+'background:#f0f5ff">'            +'<td style="'+tdC+'">'+bcNo3+'</td>'            +'<td style="'+tdL+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#1a5fa8">一体型（看護なし）　要介護'+mLNo3+'　'+mDNo3+'日</span></td>'            +'<td style="'+tdR+'">'+(drNo3*mDNo3).toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
+        if(mDYes3>0){
+          var bcYes3=(BASE_CODE&&BASE_CODE['integrated_nursing'])?BASE_CODE['integrated_nursing'][mLYes3]:'—';
+          var drYes3=(BASE_DAILY&&BASE_DAILY['integrated_nursing'])?BASE_DAILY['integrated_nursing'][mLYes3]:0;
+          codeRows+='<tr style="'+trStyle+'background:#f0fff4">'            +'<td style="'+tdC+'color:#1a7a3c;">'+bcYes3+'</td>'            +'<td style="'+tdL+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#1a7a3c">一体型（看護あり）　要介護'+mLYes3+'　'+mDYes3+'日</span></td>'            +'<td style="'+tdR+'">'+(drYes3*mDYes3).toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
+      } else {
+        codeRows+='<tr style="'+trStyle+'background:#f0f5ff">'          +'<td style="'+tdC+'">'+baseCode+'</td>'          +'<td style="'+tdL+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#666">'+svcLbl+'　要介護'+lv2+'</span></td>'          +'<td style="'+tdR+'">'+baseUnit+' 単位/月</td></tr>';
+      }
       /* 初期加算（基本単位に含まれるためここに表示） */
       var initCb=document.getElementById('c16');
       var initDaysEl=document.getElementById('initDays');
@@ -1522,30 +1628,40 @@ function buildSheetHTML(mode){
           +'<td style="'+tdL+'">'+shLbl+'</td>'
           +'<td style="'+tdR+'">＋'+shPct+'%</td></tr>';
       }
-      /* 通所利用減算 */
-      var dcDays2El=document.getElementById('daycareDays');
-      var dcRate2El=document.getElementById('daycareUnitRate');
-      var dcDays2=parseInt(dcDays2El?dcDays2El.value:0)||0;
-      var dcRate2=parseInt(dcRate2El?dcRate2El.value:0)||0;
-      if(dcDays2>0&&dcRate2>0){
-        var DAYCARE_CODE={
-          integrated_nursing:   {1:'764106',2:'764107',3:'764108',4:'764109',5:'764110'},
-          integrated_no_nursing:{1:'764101',2:'764102',3:'764103',4:'764104',5:'764105'},
-          cooperation:          {1:'764101',2:'764102',3:'764103',4:'764104',5:'764105'}
-        };
-        var DAYCARE_CODE_NAME={
-          integrated_nursing:   '通所利用減算（訪看あり）',
-          integrated_no_nursing:'通所利用減算（訪看なし）',
-          cooperation:          '通所利用減算（連携型）'
-        };
-        var dcCode=(DAYCARE_CODE[svc2]&&DAYCARE_CODE[svc2][lv2])?DAYCARE_CODE[svc2][lv2]:'—';
-        var dcName=DAYCARE_CODE_NAME[svc2]||'通所利用減算';
-        var dcTotal=dcRate2*dcDays2;
-        codeRows+='<tr style="'+trStyle+'background:#fff5f5">'
-          +'<td style="'+tdC+'color:#c0392b;">'+dcCode+'</td>'
-          +'<td style="'+tdL+'">'+dcName+'<br>'
-          +'<span style="color:#888">要介護'+lv2+'　'+dcDays2+'日 × '+dcRate2+'単位/日</span></td>'
-          +'<td style="'+tdR+'color:#c0392b;">−'+dcTotal.toLocaleString('ja-JP')+' 単位</td></tr>';
+      /* 通所利用減算（混合日割りモード対応） */
+      var DAYCARE_CODE_INV={
+        integrated_nursing:   {1:'764106',2:'764107',3:'764108',4:'764109',5:'764110'},
+        integrated_no_nursing:{1:'764101',2:'764102',3:'764103',4:'764104',5:'764105'},
+        cooperation:          {1:'764101',2:'764102',3:'764103',4:'764104',5:'764105'}
+      };
+      var proModeInv=document.getElementById('proRateMode');
+      var isMixedInv=proModeInv&&proModeInv.value==='mixed';
+      if(isMixedInv){
+        var mLNoInv=parseInt((document.getElementById('mixedLvNo')||{value:lv2}).value)||lv2;
+        var mLYesInv=parseInt((document.getElementById('mixedLvYes')||{value:lv2}).value)||lv2;
+        var dcDNoInv=parseInt((document.getElementById('mixedDcDaysNo')||{value:0}).value)||0;
+        var dcDYesInv=parseInt((document.getElementById('mixedDcDaysYes')||{value:0}).value)||0;
+        var drNoInv=DAYCARE_RATE['integrated_no_nursing'][mLNoInv]||0;
+        var drYesInv=DAYCARE_RATE['integrated_nursing'][mLYesInv]||0;
+        if(dcDNoInv>0&&drNoInv>0){
+          var cNoInv=DAYCARE_CODE_INV['integrated_no_nursing'][mLNoInv]||'—';
+          codeRows+='<tr style="'+trStyle+'background:#fff5f5">'            +'<td style="'+tdC+'color:#c0392b;">'+cNoInv+'</td>'            +'<td style="'+tdL+'">通所利用減算（訪看なし）<br>'            +'<span style="color:#888">要介護'+mLNoInv+'　'+dcDNoInv+'日 × '+drNoInv+'単位/日</span></td>'            +'<td style="'+tdR+'color:#c0392b;">−'+(drNoInv*dcDNoInv).toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
+        if(dcDYesInv>0&&drYesInv>0){
+          var cYesInv=DAYCARE_CODE_INV['integrated_nursing'][mLYesInv]||'—';
+          codeRows+='<tr style="'+trStyle+'background:#fff5f5">'            +'<td style="'+tdC+'color:#c0392b;">'+cYesInv+'</td>'            +'<td style="'+tdL+'">通所利用減算（訪看あり）<br>'            +'<span style="color:#888">要介護'+mLYesInv+'　'+dcDYesInv+'日 × '+drYesInv+'単位/日</span></td>'            +'<td style="'+tdR+'color:#c0392b;">−'+(drYesInv*dcDYesInv).toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
+      } else {
+        var dcDays2El=document.getElementById('daycareDays');
+        var dcRate2El=document.getElementById('daycareUnitRate');
+        var dcDays2=parseInt(dcDays2El?dcDays2El.value:0)||0;
+        var dcRate2=parseInt(dcRate2El?dcRate2El.value:0)||0;
+        if(dcDays2>0&&dcRate2>0){
+          var dcCode=(DAYCARE_CODE_INV[svc2]&&DAYCARE_CODE_INV[svc2][lv2])?DAYCARE_CODE_INV[svc2][lv2]:'—';
+          var dcName2=({'integrated_nursing':'通所利用減算（訪看あり）','integrated_no_nursing':'通所利用減算（訪看なし）','cooperation':'通所利用減算（連携型）'})[svc2]||'通所利用減算';
+          var dcTotal=dcRate2*dcDays2;
+          codeRows+='<tr style="'+trStyle+'background:#fff5f5">'            +'<td style="'+tdC+'color:#c0392b;">'+dcCode+'</td>'            +'<td style="'+tdL+'">'+dcName2+'<br>'            +'<span style="color:#888">要介護'+lv2+'　'+dcDays2+'日 × '+dcRate2+'単位/日</span></td>'            +'<td style="'+tdR+'color:#c0392b;">−'+dcTotal.toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
       }
       svcCodeSec='<div id="pv-code-sec" style="margin-bottom:11px">'
         +'<div style="font-size:8px;font-weight:700;letter-spacing:.08em;color:#555;margin-bottom:5px;border-left:3px solid #1a5fa8;padding-left:6px">介護サービスコード一覧</div>'
@@ -1581,11 +1697,27 @@ function buildSheetHTML(mode){
       var tL2='padding:5px 8px;font-size:9px;color:#333;';
       var tC2='padding:5px 8px;font-size:9px;font-family:monospace;font-weight:700;color:#1a5fa8;text-align:center;';
       var tR2='padding:5px 8px;font-size:9px;text-align:right;font-family:monospace;color:#444;';
-      /* 基本サービス費 */
-      simpleCodeRows+='<tr style="'+tr2+'background:#f0f5ff">'
-        +'<td style="'+tC2+'">'+bc2+'</td>'
-        +'<td style="'+tL2+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#666">'+sl2+'　要介護'+lv22+'</span></td>'
-        +'<td style="'+tR2+'">'+bu2+' 単位/月</td></tr>';
+      /* 基本サービス費（混合日割りモード対応） */
+      var proMode4El=document.getElementById('proRateMode');
+      var isMixed4=proMode4El&&proMode4El.value==='mixed';
+      if(isMixed4){
+        var mDNo4=parseInt((document.getElementById('mixedDaysNo')||{value:0}).value)||0;
+        var mDYes4=parseInt((document.getElementById('mixedDaysYes')||{value:0}).value)||0;
+        var mLNo4=parseInt((document.getElementById('mixedLvNo')||{value:lv22}).value)||lv22;
+        var mLYes4=parseInt((document.getElementById('mixedLvYes')||{value:lv22}).value)||lv22;
+        if(mDNo4>0){
+          var bcNo4=(BASE_CODE&&BASE_CODE['integrated_no_nursing'])?BASE_CODE['integrated_no_nursing'][mLNo4]:'—';
+          var drNo4=(BASE_DAILY&&BASE_DAILY['integrated_no_nursing'])?BASE_DAILY['integrated_no_nursing'][mLNo4]:0;
+          simpleCodeRows+='<tr style="'+tr2+'background:#f0f5ff">'            +'<td style="'+tC2+'">'+bcNo4+'</td>'            +'<td style="'+tL2+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#1a5fa8">一体型（看護なし）　要介護'+mLNo4+'　'+mDNo4+'日</span></td>'            +'<td style="'+tR2+'">'+(drNo4*mDNo4).toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
+        if(mDYes4>0){
+          var bcYes4=(BASE_CODE&&BASE_CODE['integrated_nursing'])?BASE_CODE['integrated_nursing'][mLYes4]:'—';
+          var drYes4=(BASE_DAILY&&BASE_DAILY['integrated_nursing'])?BASE_DAILY['integrated_nursing'][mLYes4]:0;
+          simpleCodeRows+='<tr style="'+tr2+'background:#f0fff4">'            +'<td style="'+tC2+'color:#1a7a3c;">'+bcYes4+'</td>'            +'<td style="'+tL2+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#1a7a3c">一体型（看護あり）　要介護'+mLYes4+'　'+mDYes4+'日</span></td>'            +'<td style="'+tR2+'">'+(drYes4*mDYes4).toLocaleString('ja-JP')+' 単位</td></tr>';
+        }
+      } else {
+        simpleCodeRows+='<tr style="'+tr2+'background:#f0f5ff">'          +'<td style="'+tC2+'">'+bc2+'</td>'          +'<td style="'+tL2+'">定期巡回・随時対応型訪問介護看護費<br><span style="color:#666">'+sl2+'　要介護'+lv22+'</span></td>'          +'<td style="'+tR2+'">'+bu2+' 単位/月</td></tr>';
+      }
       /* 初期加算 */
       var initCb2=document.getElementById('c16');
       if(initCb2&&initCb2.checked&&!initCb2.disabled){
@@ -2208,7 +2340,10 @@ document.addEventListener('DOMContentLoaded',function(){
   var proRateSel=document.getElementById('proRateMode');
   var usedDaysBox=document.getElementById('usedDays-box');
   function syncProRateMode(){
-    if(usedDaysBox) usedDaysBox.style.display=(proRateSel&&proRateSel.value==='daily')?'block':'none';
+    var mode=proRateSel?proRateSel.value:'full';
+    if(usedDaysBox) usedDaysBox.style.display=(mode==='daily')?'block':'none';
+    var mixedBox=document.getElementById('mixed-box');
+    if(mixedBox) mixedBox.style.display=(mode==='mixed')?'block':'none';
   }
   if(proRateSel){
     proRateSel.addEventListener('change',function(){ syncProRateMode(); autosave(); });
