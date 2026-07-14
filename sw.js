@@ -4,11 +4,11 @@
    ===================================================== */
 var CACHE_NAME = 'teiki-inori-v2';
 var ASSETS = [
-  '/tamamasa2916/index.html',
-  '/tamamasa2916/manifest.json',
-  '/tamamasa2916/icon-180.png',
-  '/tamamasa2916/icon-192.png',
-  '/tamamasa2916/icon-512.png'
+  '/Pro.VOL.3.1/index.html',
+  '/Pro.VOL.3.1/manifest.json',
+  '/Pro.VOL.3.1/icon-180.png',
+  '/Pro.VOL.3.1/icon-192.png',
+  '/Pro.VOL.3.1/icon-512.png'
 ];
 
 /* インストール：キャッシュに登録 */
@@ -48,7 +48,7 @@ self.addEventListener('fetch', function(e) {
         return res;
       });
     }).catch(function() {
-      return caches.match('/tamamasa2916/index.html');
+      return caches.match('/Pro.VOL.3.1/index.html');
     })
   );
 });
